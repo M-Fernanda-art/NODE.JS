@@ -5,21 +5,36 @@
 // Casos en los que se puede usar: login, registro, tiendas online, blogs, chats, APIs, sistemas escolares
 // Ventajas: Usa JS completo, backend y forntend, rapido, muy usado
 
-const express = require("express");
-const app = express();
+// REGISTRAR
 
-app.use(express.json());
+const formulario = document.getElementById("formulario");
+const mensaje = document.getElementById("mensaje");
 
-app.post("/saludo", (req, res) => {
-    const nombre = req.body.nombre;
+formulario.addEventListener("submit", function(event) {
 
-    res.json({
-        mensaje: `Hola, ${nombre}. Bienvenido a Node.js`
-});
-});
+    event.preventDefault();
 
-app.listen(3000, () => {
-    console.log("servidor corriendo en http://localhost:3000");
+    const datos = {
+        nombre: document.getElementById("nombre").value,
+        correo: document.getElementById("correo").value
+    };
+
+    fetch("/registro", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(data => {
+        mensaje.textContent = data.mensaje;
+    })
+    .catch(error => {
+        mensaje.textContent = "Error";
+        console.log(error);
+    });
+
 });
 
 

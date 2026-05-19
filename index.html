@@ -9,13 +9,19 @@
     
     <!-- QUE ES NODE JS -->
 
-    <h1>Enviar Nombre</h1>
+    <h1>Registro</h1>
 
-    <input type="text" id="nombre" placeholder="Escribe tu nombre">
-    <button onclick="enviarDatos()">Enviar</button>
+    <form id="formulario">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <br><br>
 
-    <p id="respuesta"></p>
+        <input type="email" id="correo" placeholder="correo" required>
+        <br><br>
 
+        <button type="submit">Enviar</button>
+    </form>
+
+    <p id="mensaje"></p>
 
     <!-- INICIAR SESIÓN -->
 
