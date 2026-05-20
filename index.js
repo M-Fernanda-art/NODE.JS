@@ -40,6 +40,7 @@ formulario.addEventListener("submit", function(event) {
 });
 
 
+
 // INGRESAR
 
 function iniciarSesion() {
@@ -58,10 +59,10 @@ function iniciarSesion() {
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById("resultado").textContent = data.mensaje;
+        document.getElementById("resultado2").textContent = data.mensaje;
     })
     .catch(error => {
-        document.getElementById("resultado").textContent = "Error en la conexión";
+        document.getElementById("resultado2").textContent = "Error en la conexión";
         console.log(error);
     });
 }
@@ -126,7 +127,7 @@ function iniciarSesion() {
 // }
 
 
-// EJEMPLO 2
+// EJEMPLO 2 - LISTA DE PRODUCTOS
 
 const boton = document.getElementById("boton");
 const lista = document.getElementById("lista");
@@ -153,3 +154,51 @@ boton.addEventListener("click", () => {
         console.log("Error:", error);
     });
 });
+
+
+// EJEMPLO 3 - COMENTARIOS
+
+const botonComentarios = document.getElementById("enviar");
+const listaComentarios = document.getElementById("lista2");
+
+function cargarComentarios() {
+
+    fetch("/comentarios")
+    .then(response => response.json())
+    .then(data => {
+
+        listaComentarios.innerHTML = "";
+
+        data.forEach(comentario => {
+            const li = document.createElement("li");
+            li.textContent = comentario;
+            listaComentarios.appendChild(li);
+        });
+    });
+}
+
+botonComentarios.addEventListener("click", () => {
+    const comentario = document.getElementById("comentario").value;
+
+    fetch("/comentarios", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            comentario: comentario
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        cargarComentarios();
+
+        document.getElementById("comentario").value = "";
+    });
+});
+
+cargarComentarios();
