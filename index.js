@@ -1,5 +1,7 @@
 // QUE ES NODE JS
 
+// const { response } = require("express");
+
 // Es un entorno que permite ejecutar JavaScript fuera del navegador, principalmente en servidores.
 // Se puede usar JS para: Crear servidores web, manejar bases de datos, procesar formularios, crear APIs, subir archivos,hacer aplicaciones backend
 // Casos en los que se puede usar: login, registro, tiendas online, blogs, chats, APIs, sistemas escolares
@@ -202,3 +204,79 @@ botonComentarios.addEventListener("click", () => {
 });
 
 cargarComentarios();
+
+
+// EJEMPLO 4 - CARRITO DE COMPRAS
+
+const listaProductos = document.getElementById("productos");
+const listaCarrito = document.getElementById("carrito");
+
+function cargarProductos() {
+
+    fetch("/productos")
+    .then(response => response.json())
+    .then(data => {
+
+        listaProductos.innerHTML = "";
+
+        data.forEach(producto => {
+            
+            const li = document.createElement("li");
+
+            li.textContent = producto.nombre;
+
+            const boton = document.createElement("button");
+
+            boton.textContent = "Agregar";
+
+            boton.addEventListener("click", () => {
+                agregarAlCarrito(producto);
+            });
+
+            li.appendChild(boton);
+
+            listaProductos.appendChild(li);
+        });
+    });
+}
+
+function agregarAlCarrito(producto) {
+
+    fetch("/carrito", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(producto)
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        cargarCarrito();
+    });
+}
+
+function cargarCarrito() {
+
+    fetch("/carrito")
+    .then(response => response.json())
+    .then(data => {
+
+        listaCarrito.innerHTML = "";
+
+        data.forEach(producto => {
+
+            const li = document.createElement("li");
+
+            li.textContent = producto.nombre;
+
+            listaCarrito.appendChild(li);
+        });
+    });
+}
+
+cargarProductos();
+cargarCarrito();

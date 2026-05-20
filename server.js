@@ -69,6 +69,41 @@ app.post("/comentarios", (req, res) => {
     });
 });
 
+// EJEMPLO 4 - CARRITO DE COMPRAS
+
+app.use(express.json());
+app.use(express.static(__dirname));
+
+const carrito =[];
+
+const productos =[
+    { id: 1, nombre: "Laptop" },
+    { id: 2, nombre: "Mouse" },
+    { id: 3, nombre: "Teclado" }
+];
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.get("/productos", (req, res) => {
+    res.json(productos);
+});
+
+app.get("/carrito", (req, res) => {
+    res.json(carrito);
+});
+
+app.post("/carrito", (req, res) => {
+
+    const producto = req.body;
+
+    carrito.push(producto);
+
+    res.json({
+        mensaje: "producto agregado al carrito"
+    });
+});
 
 
 
