@@ -5,6 +5,8 @@
 // Casos en los que se puede usar: login, registro, tiendas online, blogs, chats, APIs, sistemas escolares
 // Ventajas: Usa JS completo, backend y forntend, rapido, muy usado
 
+
+
 // REGISTRAR
 
 const formulario = document.getElementById("formulario");
@@ -91,16 +93,16 @@ function iniciarSesion() {
 // 3. Crear archivo: server.js
 // 4. Código básico: 
 
-const express = require("express");
-const app = express();
+// const express = require("express");
+// const app = express();
 
-app.get("/", (req, res) => {
-    res.send("Hola, tu servidor funciona con Express");
-});
+// app.get("/", (req, res) => {
+//     res.send("Hola, tu servidor funciona con Express");
+// });
 
-app.listen(3000, () => {
-    console.log("Servidor corriendo en http://localhost:3000");
-});
+// app.listen(3000, () => {
+//     console.log("Servidor corriendo en http://localhost:3000");
+// });
 
 // 5. Ejecutar: node server.js
 // Resultado: http://localhost:3000
@@ -122,3 +124,32 @@ app.listen(3000, () => {
 //     "express": "^4.18.2"
 //   }
 // }
+
+
+// EJEMPLO 2
+
+const boton = document.getElementById("boton");
+const lista = document.getElementById("lista");
+
+boton.addEventListener("click", () => {
+
+    fetch("/productos")
+    .then(response => response.json())
+    .then(data => {
+
+        lista.innerHTML = "";
+
+        data.forEach(producto => {
+
+            const li = document.createElement("li");
+
+            li.textContent =
+                `${producto.nombre} - $${producto.precio}`;
+
+                lista.appendChild(li);
+        });
+    })
+    .catch(error => {
+        console.log("Error:", error);
+    });
+});

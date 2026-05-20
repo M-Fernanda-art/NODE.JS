@@ -22,3 +22,6 @@ app.post("/registro", (req, res) => {
 app.listen(3000, () => {
     console.log("servidor activo en http://localhost:3000");
 });
+
+
+
